@@ -1,0 +1,21 @@
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "refreshed-identity",
+	"compatibility_date": "2026-05-16",
+	"compatibility_flags": ["nodejs_als"],
+	"main": ".svelte-kit/cloudflare/_worker.js",
+	"assets": {
+		"binding": "ASSETS",
+		"directory": ".svelte-kit/cloudflare"
+	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_id": "4e2de503-0474-451e-91d4-a4ee3ca6776f",
+			"database_name": "refreshed-identity",
+			"remote": true,
+		}
+	],
+	"workers_dev": true,
+	"preview_urls": true
+}
