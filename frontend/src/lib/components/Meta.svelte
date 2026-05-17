@@ -23,9 +23,9 @@
 
 <svelte:head>
 	{#if title}
-		<title>{title}{noTitleSuffix ? '' : ' | AstroConnect'}</title>
-		<meta property="og:title" content="{title}{noTitleSuffix ? '' : ' | AstroConnect'}" />
-		<meta name="twitter:title" content="{title}{noTitleSuffix ? '' : ' | AstroConnect'}" />
+		<title>{title}{noTitleSuffix ? '' : ' | Refreshed Identity'}</title>
+		<meta property="og:title" content="{title}{noTitleSuffix ? '' : ' | Refreshed Identity'}" />
+		<meta name="twitter:title" content="{title}{noTitleSuffix ? '' : ' | Refreshed Identity'}" />
 	{/if}
 
 	{#if description}

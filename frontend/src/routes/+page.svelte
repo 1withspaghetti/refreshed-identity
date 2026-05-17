@@ -3,7 +3,10 @@
 	import { resolve } from '$app/paths';
 	import HeroHeader from './HeroHeader.svelte';
 	import { IdCard, FingerprintPattern, Search, DatabaseSearch } from '@lucide/svelte';
+	import Meta from '@/components/Meta.svelte';
 </script>
+
+<Meta noTitleSuffix title="Refreshed Identity" />
 
 <div>
 	<HeroHeader />

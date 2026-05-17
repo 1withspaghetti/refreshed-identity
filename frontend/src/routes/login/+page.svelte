@@ -1,7 +1,10 @@
 <script lang="ts">
 	import LoginForm from '$lib/components/login-form.svelte';
 	import { resolve } from '$app/paths';
+	import Meta from '@/components/Meta.svelte';
 </script>
+
+<Meta title="Login" />
 
 <div class="grid min-h-svh lg:grid-cols-2">
 	<div class="flex flex-col gap-4 p-6 md:p-10">

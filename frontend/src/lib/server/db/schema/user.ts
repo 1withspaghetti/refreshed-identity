@@ -2,6 +2,7 @@ import { index, integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 
 import { relations, sql } from 'drizzle-orm';
 import { sessions } from './session';
+import { replacements } from './replacement';
 
 export const users = sqliteTable(
 	'users',
@@ -25,5 +26,6 @@ export const users = sqliteTable(
 );
 
 export const usersRelations = relations(users, ({ many }) => ({
-	sessions: many(sessions)
+	sessions: many(sessions),
+	replacements: many(replacements)
 }));
