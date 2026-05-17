@@ -1,4 +1,5 @@
 <script lang="ts">
+	/* eslint-disable svelte/no-navigation-without-resolve */
 	import Button from '$lib/components/ui/button/button.svelte';
 	import Menu from '@lucide/svelte/icons/menu';
 	import X from '@lucide/svelte/icons/x';
@@ -8,14 +9,14 @@
 
 	type MenuItem = {
 		name: string;
-		href: ResolvedPathname;
+		href: ResolvedPathname | string;
 	};
 
 	let menuItems: MenuItem[] = [
 		{ name: 'How It Works', href: resolve('/#how-it-works') },
 		{ name: 'Get Started', href: resolve('/login') },
 		{ name: 'API Documentation', href: resolve('/docs') },
-		{ name: 'Example Code', href: resolve('/') }
+		{ name: 'Example Code', href: "https://github.com/1withspaghetti/refreshed-identity/tree/main/examples" }
 	];
 
 	let menuState = $state(false);

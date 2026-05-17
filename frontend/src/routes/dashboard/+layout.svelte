@@ -17,6 +17,16 @@
 
 	export const navData: NavGroup[] = [
 		{
+			title: 'Manage My Identity',
+			items: [
+				{
+					href: '/dashboard/refresh-identity',
+					icon: FileSearch,
+					label: 'Refresh Identity'
+				}
+			]
+		},
+		{
 			title: 'General',
 			items: [
 				{
@@ -28,16 +38,6 @@
 					href: '/dashboard/settings',
 					icon: Settings,
 					label: 'Settings'
-				}
-			]
-		},
-		{
-			title: 'Manage My Identity',
-			items: [
-				{
-					href: '/dashboard/refresh-identity',
-					icon: FileSearch,
-					label: 'Refresh Identity'
 				}
 			]
 		}
