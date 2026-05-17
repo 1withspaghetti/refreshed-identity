@@ -6,7 +6,7 @@ import { and, eq, not } from 'drizzle-orm';
 import { identityCreateSchema } from '@/validators/identityEditValidator';
 import { error } from '@sveltejs/kit';
 import { sha256 } from '@oslojs/crypto/sha2';
-import { PUBLIC_GLOBAL_SALT } from '$env/static/public';
+import { env } from 'cloudflare:workers';
 
 export const load = (async ({ locals, platform }) => {
 	const { user } = await locals.auth();
@@ -63,7 +63,7 @@ export const actions: Actions = {
 		if (existing)
 			error(400, 'That name already exists in our records and may cause conflicts when replacing');
 
-		const hash = sha256(new TextEncoder().encode(data.deadname + '_' + PUBLIC_GLOBAL_SALT));
+		const hash = sha256(new TextEncoder().encode(data.deadname + '_' + env.PUBLIC_GLOBAL_SALT));
 
 		const userExisting = await db.query.replacements.findFirst({
 			columns: {

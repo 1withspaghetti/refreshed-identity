@@ -1,7 +1,6 @@
 import { Google } from 'arctic';
-import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from '$env/static/private';
-import { ORIGIN } from '$env/static/private';
+import { env } from 'cloudflare:workers';
 
-const callbackUrl = new URL('/login/google/callback', ORIGIN).toString();
+const callbackUrl = new URL('/login/google/callback', "https://refreshed-identity.tyler.place/").toString();
 
-export const google = new Google(GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, callbackUrl.toString());
+export const google = new Google(env.GOOGLE_CLIENT_ID, env.GOOGLE_CLIENT_SECRET, callbackUrl.toString());

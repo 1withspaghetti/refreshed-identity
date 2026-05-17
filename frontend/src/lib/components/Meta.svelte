@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import { PUBLIC_BASE_URL } from '$env/static/public';
 
 	type MetaProps = {
 		title?: string;
@@ -45,5 +44,5 @@
 	{/if}
 
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content={new URL(path, PUBLIC_BASE_URL).href} />
+	<meta property="og:url" content={new URL(path, "https://refreshed-identity.tyler.place/").href} />
 </svelte:head>
