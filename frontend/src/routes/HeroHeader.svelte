@@ -4,18 +4,18 @@
 	import X from '@lucide/svelte/icons/x';
 	import { resolve } from '$app/paths';
 	import { scrollY } from 'svelte/reactivity/window';
-	import type { PathnameWithSearchOrHash } from '$app/types';
+	import type { ResolvedPathname } from '$app/types';
 
 	type MenuItem = {
 		name: string;
-		href: PathnameWithSearchOrHash;
+		href: ResolvedPathname;
 	};
 
 	let menuItems: MenuItem[] = [
-		{ name: 'Features', href: '/' },
-		{ name: 'Solution', href: '/' },
-		{ name: 'Pricing', href: '/' },
-		{ name: 'About', href: '/' }
+		{ name: 'How It Works', href: resolve('/#how-it-works') },
+		{ name: 'Get Started', href: resolve('/login') },
+		{ name: 'API Documentation', href: resolve('/docs') },
+		{ name: 'Example Code', href: resolve('/') }
 	];
 
 	let menuState = $state(false);
@@ -63,7 +63,7 @@
 						{#each menuItems as item, index (index)}
 							<li>
 								<a
-									href={resolve(item.href)}
+									href={item.href}
 									class="block text-muted-foreground duration-150 hover:text-accent-foreground"
 								>
 									<span>{item.name}</span>
@@ -83,7 +83,7 @@
 							{#each menuItems as item, index (index)}
 								<li>
 									<a
-										href={resolve(item.href)}
+										href={item.href}
 										class="block text-muted-foreground duration-150 hover:text-accent-foreground"
 									>
 										<span>{item.name}</span>

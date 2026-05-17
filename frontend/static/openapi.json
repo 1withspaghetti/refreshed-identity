@@ -1,0 +1,338 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "Refreshed Identity",
+    "description": "Identity Lookup tools for individiuals with updated names.\n\nGlobal Salt for hashing: `a8ca3201-4b76-4339-9f10-517c7c911873`",
+    "contact": {
+      "email": "contact@refreshed-identity.tyler.place"
+    },
+    "version": "1.0.0"
+  },
+  "externalDocs": {
+    "description": "Home Page",
+    "url": "https://refreshed-identity.tyler.place"
+  },
+  "servers": [
+    {
+      "url": "https://refreshed-identity.tyler.place/api"
+    }
+  ],
+  "tags": [
+    {
+      "name": "hash",
+      "description": "Find up to date identities using a hash of the previous name"
+    },
+    {
+      "name": "email",
+      "description": "Find up to date identities using a previous email"
+    }
+  ],
+  "paths": {
+    "/lookup/hash": {
+      "post": {
+        "tags": [
+          "hash"
+        ],
+        "summary": "Lookup a single hash",
+        "description": "The hash is formed using a base64 SHA256 encoding of the lowercase deadname, and underscore, and a global salt. For example, \"John Doe\" would be encoded as `base64(sha256(\"john doe\" + \"_\" + \"a8ca3201-4b76-4339-9f10-517c7c911873\"))`",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HashLookup"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HashLookupResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Hash supplied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Hash not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lookup/hash/many": {
+      "post": {
+        "tags": [
+          "hash"
+        ],
+        "summary": "Lookup multiple hashes",
+        "description": "The hash is formed using a base64 SHA256 encoding of the lowercase deadname, and underscore, and a global salt. For example, \"John Doe\" would be encoded as `base64(sha256(\"john doe\" + \"_\" + \"a8ca3201-4b76-4339-9f10-517c7c911873\"))`",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HashLookupMany"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HashLookupManyResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Hash(s) supplied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lookup/email": {
+      "post": {
+        "tags": [
+          "email"
+        ],
+        "summary": "Lookup a single email",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmailLookup"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmailLookupResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Email supplied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Hash not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lookup/email/many": {
+      "post": {
+        "tags": [
+          "email"
+        ],
+        "summary": "Lookup multiple emails",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmailLookupMany"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmailLookupManyResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Email(s) supplied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "HashLookup": {
+        "type": "object",
+        "properties": {
+          "hash": {
+            "type": "string",
+            "format": "base64",
+            "example": "uU0nuZNNPgilLlLX2n2r+sSE7+N6U4DukIj3rOLvzek="
+          }
+        }
+      },
+      "HashLookupResponse": {
+        "type": "object",
+        "properties": {
+          "replacement": {
+            "type": "string",
+            "example": "Jane Doe"
+          }
+        }
+      },
+      "HashLookupMany": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "format": "base64",
+          "example": "uU0nuZNNPgilLlLX2n2r+sSE7+N6U4DukIj3rOLvzek="
+        }
+      },
+      "HashLookupManyResponse": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "example": "Jane Doe"
+        }
+      },
+      "EmailLookup": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "johndoe@example.com"
+          }
+        }
+      },
+      "EmailLookupResponse": {
+        "type": "object",
+        "properties": {
+          "replacement": {
+            "type": "string",
+            "example": "Jane Doe"
+          }
+        }
+      },
+      "EmailLookupMany": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "format": "base64",
+          "example": "johndoe@example.com"
+        }
+      },
+      "EmailLookupManyResponse": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "example": "Jane Doe"
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Error message"
+          }
+        },
+        "required": [
+          "message"
+        ]
+      }
+    }
+  }
+}
