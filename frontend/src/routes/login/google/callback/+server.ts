@@ -1,7 +1,6 @@
 import { error, redirect } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { decodeIdToken, type OAuth2Tokens } from 'arctic';
-import { google } from '@/server/oauth';
+import { decodeIdToken, Google, type OAuth2Tokens } from 'arctic';
 import { getDb, table } from '@/server/db';
 import { and, eq, isNull, or, sql } from 'drizzle-orm';
 import { createSession, generateSessionToken, setSessionTokenCookie } from '@/server/auth';
@@ -25,6 +24,10 @@ export const GET: RequestHandler = async ({ url, cookies, platform }) => {
 	if (state !== storedState) {
 		return error(400, 'Invalid state, please try again');
 	}
+
+	const callbackUrl = new URL('/login/google/callback', "https://refreshed-identity.tyler.place/").toString();
+
+	const google = new Google(platform!.env.GOOGLE_CLIENT_ID, platform!.env.GOOGLE_CLIENT_SECRET, callbackUrl.toString());
 
 	let tokens: OAuth2Tokens;
 	try {

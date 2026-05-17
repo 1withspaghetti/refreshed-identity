@@ -1,9 +1,13 @@
-import { generateCodeVerifier, generateState } from 'arctic';
+import { generateCodeVerifier, generateState, Google } from 'arctic';
 import type { RequestHandler } from './$types';
-import { google } from '@/server/oauth';
 import { redirect } from '@sveltejs/kit';
 
-export const GET: RequestHandler = async ({ cookies, url }) => {
+export const GET: RequestHandler = async ({ cookies, url, platform }) => {
+
+	const callbackUrl = new URL('/login/google/callback', "https://refreshed-identity.tyler.place/").toString();
+
+	const google = new Google(platform!.env.GOOGLE_CLIENT_ID, platform!.env.GOOGLE_CLIENT_SECRET, callbackUrl.toString());
+
 	const state = generateState();
 	const codeVerifier = generateCodeVerifier();
 	const authUrl = google.createAuthorizationURL(state, codeVerifier, [
