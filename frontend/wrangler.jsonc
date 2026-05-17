@@ -13,7 +13,7 @@
 			"binding": "DB",
 			"database_id": "4e2de503-0474-451e-91d4-a4ee3ca6776f",
 			"database_name": "refreshed-identity",
-			"remote": true,
+			"remote": true
 		}
 	],
 	"workers_dev": true,
