@@ -8,8 +8,6 @@ import type { Session } from '@/server/db/schema/session';
 import type { SessionUser } from '@/types/user';
 import { error, redirect, type Handle } from '@sveltejs/kit';
 
-process.env.TZ = 'America/Los_Angeles';
-
 export const handle: Handle = async ({ event, resolve }) => {
 	// Save these values in case auth() is called multiple times
 	let { session, user }: PartialAuthReturn = { session: null, user: null };
