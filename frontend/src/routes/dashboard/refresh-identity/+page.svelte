@@ -47,7 +47,8 @@
 			</div>
 			<Card.Title>Refresh your Identity</Card.Title>
 			<Card.Description>
-				This information will be hashed to prevent reverse lookup and then provided to companies to ensure your data is accurate.
+				This information will be hashed to prevent reverse lookup and then provided to companies to
+				ensure your data is accurate.
 			</Card.Description>
 		</Card.Header>
 		<Card.Content>
@@ -56,9 +57,17 @@
 					<Form.Control>
 						{#snippet children({ props })}
 							<Form.Label>Deadname</Form.Label>
-							<div class="relative flex gap-2 items-center">
-								<Input {...props} type={deadnameShown ? "text" : "password"} bind:value={$formData.deadname} />
-								<Button variant="secondary" size="lg" onclick={() => deadnameShown = !deadnameShown}>
+							<div class="relative flex items-center gap-2">
+								<Input
+									{...props}
+									type={deadnameShown ? 'text' : 'password'}
+									bind:value={$formData.deadname}
+								/>
+								<Button
+									variant="secondary"
+									size="lg"
+									onclick={() => (deadnameShown = !deadnameShown)}
+								>
 									{#if deadnameShown}
 										<Eye />
 									{:else}
@@ -67,7 +76,8 @@
 								</Button>
 							</div>
 							<Form.Description>
-								Please enter your full deadname (first + last) to be searched for. Don't worry, nobody else can see this.
+								Please enter your full deadname (first + last) to be searched for. Don't worry,
+								nobody else can see this.
 							</Form.Description>
 						{/snippet}
 					</Form.Control>
@@ -90,9 +100,7 @@
 						{#snippet children({ props })}
 							<Form.Label>Name</Form.Label>
 							<Input {...props} bind:value={$formData.replacement} />
-							<Form.Description>
-								The new name you would be known by!
-							</Form.Description>
+							<Form.Description>The new name you would be known by!</Form.Description>
 						{/snippet}
 					</Form.Control>
 					<Form.FieldErrors />

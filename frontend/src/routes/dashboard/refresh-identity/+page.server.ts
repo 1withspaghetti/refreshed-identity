@@ -24,9 +24,9 @@ export const load = (async ({ locals, platform }) => {
 	return {
 		form: await superValidate(
 			{
-				deadname: replacements?.deadname || "",
-				email: replacements?.email || "",
-				replacement: replacements?.replacement || user.name || ""
+				deadname: replacements?.deadname || '',
+				email: replacements?.email || '',
+				replacement: replacements?.replacement || user.name || ''
 			},
 			zod4(identityCreateSchema)
 		)
@@ -46,7 +46,7 @@ export const actions: Actions = {
 			deadname: form.data.deadname.toLowerCase(),
 			email: form.data.email?.toLowerCase(),
 			replacement: form.data.replacement
-		}
+		};
 
 		const existing = await db.query.replacements.findFirst({
 			columns: {
@@ -54,26 +54,34 @@ export const actions: Actions = {
 				deadname: true,
 				email: true
 			},
-			where: and(eq(table.replacements.deadname, data.deadname), data.email ? eq(table.replacements.email, data.email) : undefined, not(eq(table.replacements.userId, user.id)))
+			where: and(
+				eq(table.replacements.deadname, data.deadname),
+				data.email ? eq(table.replacements.email, data.email) : undefined,
+				not(eq(table.replacements.userId, user.id))
+			)
 		});
-		if (existing) error(400, "That name already exists in our records and may cause conflicts when replacing");
+		if (existing)
+			error(400, 'That name already exists in our records and may cause conflicts when replacing');
 
-		const hash = sha256(new TextEncoder().encode(data.deadname+"_"+PUBLIC_GLOBAL_SALT))
+		const hash = sha256(new TextEncoder().encode(data.deadname + '_' + PUBLIC_GLOBAL_SALT));
 
 		const userExisting = await db.query.replacements.findFirst({
 			columns: {
 				id: true
 			},
 			where: eq(table.replacements.userId, user.id)
-		})
+		});
 
-		if (userExisting) await db.update(table.replacements).set({
-			...data,
-			hash
-		}).where(eq(table.replacements.id, userExisting.id));
-		else await db
-			.insert(table.replacements)
-			.values({
+		if (userExisting)
+			await db
+				.update(table.replacements)
+				.set({
+					...data,
+					hash
+				})
+				.where(eq(table.replacements.id, userExisting.id));
+		else
+			await db.insert(table.replacements).values({
 				id: crypto.randomUUID(),
 				userId: user.id,
 				...data,
@@ -81,5 +89,5 @@ export const actions: Actions = {
 			});
 
 		return message(form, { type: 'success', text: 'Identity updated successfully!' });
-	},
+	}
 };
