@@ -6,15 +6,16 @@
 	import { zod4Client } from 'sveltekit-superforms/adapters';
 	import { Input } from '@/components/ui/input';
 	import { Button } from '@/components/ui/button';
-	import dayjs from 'dayjs';
 	import { toast } from 'svelte-sonner';
 	import Meta from '@/components/Meta.svelte';
 	import UserAvatar from '@/components/UserAvatar.svelte';
 	import { identityCreateSchema } from '@/validators/identityEditValidator';
+	import { Eye, EyeClosed } from '@lucide/svelte';
 
 	let { data }: PageProps = $props();
 
-	let formNew = superForm({}, {
+	// svelte-ignore state_referenced_locally
+	let form = superForm(data.form, {
 		validators: zod4Client(identityCreateSchema),
 		dataType: 'json',
 		taintedMessage: true,
@@ -29,9 +30,11 @@
 			)
 	});
 
-	let { form: formData, enhance, submitting, tainted } = formNew;
+	let { form: formData, enhance, submitting, tainted } = form;
 
 	const user = $derived(data.user);
+
+	let deadnameShown = $state(false);
 </script>
 
 <Meta title="Profile" />
@@ -42,21 +45,53 @@
 			<div class="flex justify-center">
 				<UserAvatar {user} class="absolute size-24 -translate-y-full" />
 			</div>
-			<Card.Title>Edit Profile</Card.Title>
+			<Card.Title>Refresh your Identity</Card.Title>
 			<Card.Description>
-				This will be included in every application you send, and on every research opportunity you
-				post.
+				This information will be hashed to prevent reverse lookup and then provided to companies to ensure your data is accurate.
 			</Card.Description>
 		</Card.Header>
 		<Card.Content>
 			<form method="POST" use:enhance class="flex flex-col gap-6">
-				<Form.Field {form} name="name">
+				<Form.Field {form} name="deadname">
 					<Form.Control>
 						{#snippet children({ props })}
-							<Form.Label>Display Name</Form.Label>
-							<Input {...props} bind:value={$formData.name} />
+							<Form.Label>Deadname</Form.Label>
+							<div class="relative flex gap-2 items-center">
+								<Input {...props} type={deadnameShown ? "text" : "password"} bind:value={$formData.deadname} />
+								<Button variant="secondary" size="lg" onclick={() => deadnameShown = !deadnameShown}>
+									{#if deadnameShown}
+										<Eye />
+									{:else}
+										<EyeClosed />
+									{/if}
+								</Button>
+							</div>
 							<Form.Description>
-								Please enter your full name or a name you would like to be known by.
+								Please enter your full deadname (first + last) to be searched for. Don't worry, nobody else can see this.
+							</Form.Description>
+						{/snippet}
+					</Form.Control>
+					<Form.FieldErrors />
+				</Form.Field>
+				<Form.Field {form} name="email">
+					<Form.Control>
+						{#snippet children({ props })}
+							<Form.Label>Email</Form.Label>
+							<Input {...props} type="email" bind:value={$formData.email} />
+							<Form.Description>
+								Email associated with accounts or data using your deadname.
+							</Form.Description>
+						{/snippet}
+					</Form.Control>
+					<Form.FieldErrors />
+				</Form.Field>
+				<Form.Field {form} name="replacement">
+					<Form.Control>
+						{#snippet children({ props })}
+							<Form.Label>Name</Form.Label>
+							<Input {...props} bind:value={$formData.replacement} />
+							<Form.Description>
+								The new name you would be known by!
 							</Form.Description>
 						{/snippet}
 					</Form.Control>
@@ -78,22 +113,5 @@
 				</div>
 			</form>
 		</Card.Content>
-		<Card.Footer class="flex-wrap justify-between gap-x-2 text-sm text-muted-foreground">
-			<span>
-				<u>Signed Up:</u>
-				<span title={dayjs(user.firstLogin).format('LLLL')}
-					>{dayjs(user.firstLogin).format('MMMM D, YYYY')}</span
-				>
-			</span>
-			<span>
-				<u>Last Login:</u>
-				<span title={dayjs(user.lastLogin).format('LLLL')}
-					>{dayjs(user.lastLogin).format('MMMM D, YYYY')}</span
-				>
-			</span>
-			<span>
-				<u>User ID:</u> <span>{user.id}</span>
-			</span>
-		</Card.Footer>
 	</Card.Root>
 </div>

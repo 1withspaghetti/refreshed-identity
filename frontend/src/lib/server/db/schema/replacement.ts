@@ -3,7 +3,7 @@ import { users } from "./user";
 import { relations } from "drizzle-orm";
 
 export const replacements = sqliteTable(
-	'sessions',
+	'replacements',
 	{
 		id: text().primaryKey(),
 		userId: text('user_id')
@@ -13,7 +13,7 @@ export const replacements = sqliteTable(
         email: text({ length: 500 }),
         replacement: text({ length: 500 }).notNull()
 	},
-	(table) => [index('sessions_user_id_idx').on(table.userId)]
+	(table) => [index('replacements_user_id_idx').on(table.userId), index('replacements_deadname_idx').on(table.deadname), index('replacements_email_idx').on(table.email)]
 );
 
 export const replacementsRelations = relations(replacements, ({ one }) => ({
